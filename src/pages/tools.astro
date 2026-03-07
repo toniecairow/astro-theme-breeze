@@ -1,26 +1,38 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import site from "@/config/site";
+import { Icon } from "astro-icon/components";
 ---
 
 <Layout title={site.labels.toolsTitle} description={site.labels.toolsTitle}>
   <div class="mx-auto max-w-2xl p-8 md:p-16">
     <h2 class="mb-12 text-3xl font-bold">{site.labels.toolsTitle}</h2>
 
-    <div class="space-y-12">
+    <div class="space-y-8">
       {
         site.tools.map((category) => (
           <section>
-            <h3 class="mb-6 border-b border-border pb-2 text-[10px] font-bold tracking-[0.2em] text-primary uppercase">
+            <h3 class="mb-4 text-xs font-bold tracking-widest text-primary uppercase">
               {category.name}
             </h3>
-            <ul class="grid grid-cols-2 gap-4 text-sm font-light text-muted-foreground">
+            <div class="grid grid-cols-2 gap-3 md:grid-cols-3">
               {category.items.map((item) => (
-                <li class="flex items-center gap-2">
-                  <span class="h-1 w-1 rounded-full bg-primary" /> {item}
-                </li>
+                item.link ? (
+                  <a
+                    href={item.link}
+                    class="flex items-center gap-2.5 rounded-xl border border-border/50 bg-muted/20 px-4 py-3 text-sm text-foreground/80 hover:border-primary/40 hover:bg-muted/30 hover:text-primary"
+                  >
+                    <Icon name={item.icon || "mdi:application"} class="h-4 w-4 shrink-0 text-primary/60" />
+                    <span>{item.name}</span>
+                  </a>
+                ) : (
+                  <div class="flex items-center gap-2.5 rounded-xl border border-border/50 bg-muted/20 px-4 py-3 text-sm text-foreground/80">
+                    <Icon name={item.icon || "mdi:application"} class="h-4 w-4 shrink-0 text-primary/60" />
+                    <span>{item.name}</span>
+                  </div>
+                )
               ))}
-            </ul>
+            </div>
           </section>
         ))
       }
